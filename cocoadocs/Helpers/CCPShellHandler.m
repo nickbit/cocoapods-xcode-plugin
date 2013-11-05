@@ -41,10 +41,11 @@ static NSOperationQueue *operationQueue;
 	NSTask *task = [NSTask new];
     
 	task.currentDirectoryPath = directory;
-	task.launchPath = command;
-	task.arguments  = args;
-    
-    
+  task.launchPath = @"/bin/zsh";
+  task.arguments = @[@"-c", [NSString stringWithFormat:@"%@ %@", command, [args componentsJoinedByString:@" "]]];
+  task.environment = @{@"LC_ALL" : @"en_US.UTF-8"};
+  
+  
 	CCPRunOperation *operation = [[CCPRunOperation alloc] initWithTask:task];
 	[operationQueue addOperation:operation];
 }
